@@ -32,6 +32,27 @@ class Model {
 
 
 
+    step(){
+        for (var i = 0; i < this.displayX; i++) {        
+            for (var j = 0; j < this.displayY; j++){
+
+                this.handleActivated(i,j);
+
+            }
+        }
+    }
+
+    handleActivated(x,y){
+        let state = this.platform.getState(x, y);
+        if (state > 0) {
+            state++;
+            if (state == 6){
+                state = 0
+            }
+            this.platform.setState(x, y, state);
+        }
+        
+    }
 
 
 

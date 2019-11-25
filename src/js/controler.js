@@ -21,6 +21,7 @@ class Controler {
         this.createViewAndModel();
         this.initEventHandlers();
         this.view.clear();
+        this.model.randomStates();
     }
 
     createViewAndModel(){
@@ -60,7 +61,8 @@ class Controler {
 
 
     run(){
-        this.model.randomStates();
+        // this.model.randomStates();
+        this.model.step();
         this.view.refreshPlatform();        
     }
 

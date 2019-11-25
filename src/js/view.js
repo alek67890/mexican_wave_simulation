@@ -56,24 +56,6 @@ class View {
         }
     }
 
-
-    // async drawPlatform(){
-    //     console.log(this.platform)
-    //     for (var i = 0; i < this.platform.numOfX; i++) {        
-    //         for (var j = 0; j < this.platform.numOfY; j++){
-    //             if (Math.round(Math.random())==0){
-    //                 this.platform.setState(i, j, 0);    
-    //             }else{
-    //                 this.platform.setState(i, j, 1);
-    //             }
-                
-    //         }
-    //     }
-    //     this.refreshPlatform()
-    //     console.log("step")
-    // }
-
-
     async drawImage(x,y,state){
         let image = this.States.images[state];
         this.ctx.drawImage(image, ...this.platform.getPosition(x, y), this.size[0], this.size[1]);
