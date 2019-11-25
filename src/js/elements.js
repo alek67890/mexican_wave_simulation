@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash';
+
 let uri = {
     0 : '../src/img/state0_LARGE.jpg',
     1 : '../src/img/state1_LARGE.jpg',
@@ -66,7 +68,7 @@ class Platfrom{
         }
         
         this.currentMatrix = matrix;
-        this.nextMatrix = this.currentMatrix
+        this.nextMatrix = cloneDeep(this.currentMatrix)
     }
 
     getPosition(x,y){
@@ -97,9 +99,7 @@ class Platfrom{
 
     replaceOldMatrix(){
         
-        this.currentMatrix = this.nextMatrix.map(function(arr) {
-            return arr.slice();
-        });
+        this.currentMatrix = cloneDeep(this.nextMatrix)
     }
 
 }
