@@ -17,21 +17,6 @@ class Model {
         }
     }
 
-    
-    // displayStates(){
-    //     let state = 0
-    //     for (var i = 0; i < this.displayX; i++) {        
-    //         for (var j = 0; j < this.displayY; j++){
-
-    //             state = ???????
-    //             this.platform.setState(i, j, state);
-                
-    //         }
-    //     }
-    // }
-
-
-
     step(){
         for (var i = 0; i < this.displayX; i++) {        
             for (var j = 0; j < this.displayY; j++){
@@ -48,8 +33,6 @@ class Model {
         if (this.platform.getState(x-1, y) > 1 && this.platform.getState(x, y) == 0 ){
             this.platform.setState(x, y, 1);
         }
-
-
 
     }
 
@@ -68,7 +51,6 @@ class Model {
     init(){
         this.randomStates()
     }
-
 
 
 }
