@@ -48,7 +48,7 @@ class View {
     
 
     async refreshPlatform(){
-        
+        this.platform.replaceOldMatrix();
         for (var i = 0; i < this.platform.numOfX; i++) {        
             for (var j=0; j < this.platform.numOfY; j++){
                 this.drawImage(i,j,this.platform.getState(i, j))

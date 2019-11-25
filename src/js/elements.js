@@ -71,28 +71,41 @@ class Platfrom{
             
         }
         
-        this.matrix = matrix;
+        this.currentMatrix = matrix;
+        this.nextMatrix = this.currentMatrix
     }
 
     getPosition(x,y){
         [x, y] = this.handleOverflowVariable(x,y)
-        return [this.matrix[x][y].x , this.matrix[x][y].y]
+        return [this.currentMatrix[x][y].x , this.currentMatrix[x][y].y]
     }
 
     getState(x,y){
         [x, y] = this.handleOverflowVariable(x,y)
-        return this.matrix[x][y].getState()
+        return this.currentMatrix[x][y].getState()
     }
 
     setState(x,y, state){
         [x, y] = this.handleOverflowVariable(x,y)
-        this.matrix[x][y].setState(state);
+        this.nextMatrix[x][y].setState(state);
     }
 
     handleOverflowVariable(x,y){
         x = (x >= this.numOfX) ? x -(Math.floor(x/this.numOfX) * this.numOfX) : x;
         y = (y >= this.numOfY) ? y -(Math.floor(y/this.numOfY) * this.numOfY) : y; 
+
+        x = (x < 0) ? x - (Math.floor(x/this.numOfX) * this.numOfX) : x;
+        y = (y < 0) ? y - (Math.floor(y/this.numOfY) * this.numOfY) : y;
+
         return [x , y]
+    }
+
+
+    replaceOldMatrix(){
+        
+        this.currentMatrix = this.nextMatrix.map(function(arr) {
+            return arr.slice();
+        });
     }
 
 }
