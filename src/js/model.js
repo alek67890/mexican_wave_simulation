@@ -37,9 +37,20 @@ class Model {
             for (var j = 0; j < this.displayY; j++){
 
                 this.handleActivated(i,j);
+                this.prototypeActivation(i,j)
 
             }
         }
+    }
+
+    prototypeActivation(x, y){
+        // its wrong function 
+        if (this.platform.getState(x-1, y) > 1 && this.platform.getState(x, y) == 0 ){
+            this.platform.setState(x, y, 1);
+        }
+
+
+
     }
 
     handleActivated(x,y){
@@ -52,6 +63,10 @@ class Model {
             this.platform.setState(x, y, state);
         }
         
+    }
+
+    init(){
+        this.randomStates()
     }
 
 

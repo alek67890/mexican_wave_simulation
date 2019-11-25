@@ -21,7 +21,7 @@ class Controler {
         this.createViewAndModel();
         this.initEventHandlers();
         this.view.clear();
-        this.model.randomStates();
+        this.model.init();
     }
 
     createViewAndModel(){
@@ -60,8 +60,7 @@ class Controler {
     }
 
 
-    run(){
-        // this.model.randomStates();
+    runInLoop(){
         this.model.step();
         this.view.refreshPlatform();        
     }
@@ -69,7 +68,7 @@ class Controler {
 
     async loop(){
         while (true){ 
-            this.run();
+            this.runInLoop();
             console.log(`${[...this.pressedButton].join(' ')}`)
             await delay(TIME);
         }
