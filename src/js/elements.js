@@ -14,15 +14,9 @@ class States {
 
     loadImages(sources, callback) {
         this.images = {};
-        var loadedImages = 0;
-        var numImages = 0;
-        // get num of sources
-        for(var src in uri) {
-          numImages++;
-        }
-        for(var src in uri) {
-            this.images[src] = new Image();
-            this.images[src].src = uri[src];
+        for(var srcIndex in uri) {
+            this.images[srcIndex] = new Image();
+            this.images[srcIndex].src = uri[srcIndex];
         }
       }
     
