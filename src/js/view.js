@@ -4,9 +4,10 @@ import {States, Platfrom} from "./elements"
 class View {
     constructor(resolution, numOfPeople) {
         console.log("constructor")
-        this.getCanvas()
         this.resolution = resolution || [2000, 750];
         this.numOfPeople = numOfPeople || [25, 15];
+        console.log(this.numOfPeople)
+        this.getCanvas()
 
         this.calculateSize();
 
@@ -26,8 +27,14 @@ class View {
         }else {
             this.size = [size1, size1]
         }
+        console.log(this.size)
 
-        
+    }
+
+    changeResolution(newResolution){
+        this.resolution = newResolution;
+        this.calculateSize();
+        this.platform.resize(...this.size)
     }
 
     async getCanvas(){
@@ -36,6 +43,8 @@ class View {
           var ctx = canvas.getContext('2d');
           ctx.fillStyle = 'orange';
           this.ctx = ctx;
+          canvas.width = this.resolution[0];
+          canvas.height = this.resolution[1];
         }
     }
 
@@ -51,7 +60,7 @@ class View {
         this.platform.replaceOldMatrix();
         for (var i = 0; i < this.platform.numOfX; i++) {        
             for (var j=0; j < this.platform.numOfY; j++){
-                this.drawImage(i,j,this.platform.getState(i, j))
+                this.drawImage(i,j,Math.floor(this.platform.getState(i, j)))
             }
         }
     }

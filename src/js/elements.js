@@ -41,6 +41,11 @@ class Person {
         return(this.state);
     }
 
+    setPosition(x,y){
+        this.x = x;
+        this.y = y;
+    }
+
 }
 
 class Platfrom{
@@ -71,6 +76,19 @@ class Platfrom{
         this.nextMatrix = cloneDeep(this.currentMatrix)
     }
 
+    resize(sizeX, sizeY){
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+
+        for (var i = 0; i < this.numOfX; i++) {
+            for (var j=0; j < this.numOfY; j++){
+                this.currentMatrix[i][j].setPosition(i*this.sizeX, j*this.sizeY);
+                this.nextMatrix[i][j].setPosition(i*this.sizeX, j*this.sizeY);
+            }
+            
+        }
+    }
+
     getPosition(x,y){
         [x, y] = this.handleOverflowVariable(x,y)
         return [this.currentMatrix[x][y].x , this.currentMatrix[x][y].y]
@@ -88,10 +106,12 @@ class Platfrom{
 
     handleOverflowVariable(x,y){
         x = (x >= this.numOfX) ? x -(Math.floor(x/this.numOfX) * this.numOfX) : x;
-        y = (y >= this.numOfY) ? y -(Math.floor(y/this.numOfY) * this.numOfY) : y; 
+        // y = (y >= this.numOfY) ? y -(Math.floor(y/this.numOfY) * this.numOfY) : y; 
+        y = (y >= this.numOfY) ? this.numOfY-1 : y; 
 
         x = (x < 0) ? x - (Math.floor(x/this.numOfX) * this.numOfX) : x;
-        y = (y < 0) ? y - (Math.floor(y/this.numOfY) * this.numOfY) : y;
+        // y = (y < 0) ? y - (Math.floor(y/this.numOfY) * this.numOfY) : y;
+        y = (y < 0) ? 0 : y;
 
         return [x , y]
     }
