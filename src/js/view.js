@@ -55,7 +55,6 @@ class View {
 
     }
     
-
     async refreshPlatform(){
         this.platform.replaceOldMatrix();
         for (var i = 0; i < this.platform.numOfX; i++) {        
@@ -70,11 +69,30 @@ class View {
         this.ctx.drawImage(image, ...this.platform.getPosition(x, y), this.size[0], this.size[1]);
     }
 
-    // async drawPoint(x, y) {
+    async drawPoint(x, y, state) {
 
-    //     this.ctx.fillStyle = 'black';
-    //     this.ctx.fillRect(this.size[0]*x, this.size[1]*y,this.size[0],this.size[1]);
-    // }
+        switch(state) {
+            case 0:
+                this.ctx.fillStyle = 'black';
+                break;
+            case 1:
+                this.ctx.fillStyle = "red";
+                break;
+            case 2:
+                this.ctx.fillStyle = "yellow";
+                break;
+            case 3:
+                this.ctx.fillStyle = "white";
+                break;
+            case 4:
+                this.ctx.fillStyle = "yellow";
+                break;
+            case 5:
+                this.ctx.fillStyle = "red";
+                break;
+        }
+        this.ctx.fillRect(...this.platform.getPosition(x, y), this.size[0], this.size[1]);
+    }
 
 }
 

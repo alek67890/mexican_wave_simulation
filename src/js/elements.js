@@ -1,12 +1,12 @@
 import { cloneDeep } from 'lodash';
 
 let uri = {
-    0 : '../src/img/state0_LARGE.jpg',
-    1 : '../src/img/state1_LARGE.jpg',
-    2 : '../src/img/state2_LARGE.jpg',
-    3 : '../src/img/state3_LARGE.jpg',
-    4 : '../src/img/state4_LARGE.jpg',
-    5 : '../src/img/state5_LARGE.jpg',
+    0 : './img/state0_LARGE.jpg',
+    1 : './img/state1_LARGE.jpg',
+    2 : './img/state2_LARGE.jpg',
+    3 : './img/state3_LARGE.jpg',
+    4 : './img/state4_LARGE.jpg',
+    5 : './img/state5_LARGE.jpg',
 }
 
 class States {
@@ -31,6 +31,7 @@ class Person {
         this.x = x || 0;
         this.y = y || 0;
         this.state = 0;
+        this.c = 0;
     }
 
     setState(state){
@@ -40,6 +41,16 @@ class Person {
     getState(){
         return(this.state);
     }
+
+
+    setC(c){
+        this.c = c;
+    }
+
+    getC(){
+        return(this.c);
+    }
+
 
     setPosition(x,y){
         this.x = x;
@@ -103,6 +114,16 @@ class Platfrom{
         [x, y] = this.handleOverflowVariable(x,y)
         this.nextMatrix[x][y].setState(state);
     }
+
+    setC(x, y, c){
+        this.nextMatrix[x][y].setC(c);
+        this.currentMatrix[x][y].setC(c);
+    }
+
+    getC(x, y){
+        return(this.currentMatrix[x][y].getC(c));
+    }
+
 
     handleOverflowVariable(x,y){
         x = (x >= this.numOfX) ? x -(Math.floor(x/this.numOfX) * this.numOfX) : x;
