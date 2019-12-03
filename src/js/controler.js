@@ -44,7 +44,7 @@ class Controler {
 
     onRestartClick(e){
         e.preventDefault();
-        window.clearInterval(this.idInterwal)
+        window.clearTimeout(this.idLoop)
         this.model.clear();
         this.view.clear();
         this.view.refreshPlatform();
@@ -61,7 +61,7 @@ class Controler {
     }
     onPauseClick(e){
         e.preventDefault();
-        window.clearInterval(this.idInterwal)
+        window.clearTimeout(this.idLoop)
     }
 
     initButtons(){
@@ -142,16 +142,20 @@ class Controler {
     }
 
     runInLoop(){
+        let t0 = performance.now();
         this.model.step();
-        this.view.refreshPlatform();        
+        this.view.refreshPlatform();
+        let t1 = performance.now();
+        let calTime = t1 - t0; // time needed for calculation
+        this.idLoop = window.setTimeout(() => this.runInLoop() , Math.max(this.parms.delay - calTime , 0));        
     }
 
     async loop(){
         try {
-            window.clearInterval(this.idInterwal)
+            window.clearTimeout(this.idLoop)
         }
         finally {
-            this.idInterwal = window.setInterval(() => this.runInLoop() , this.parms.delay);
+            this.idLoop = window.setTimeout(() => this.runInLoop() , this.parms.delay);
         }
     }
 
