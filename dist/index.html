@@ -4,9 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+    <title>Mexican Wave</title>
 </head>
 <body>
-     <canvas id="canvas" width="2000" height="1080"></canvas>
+    <div class="container-fluid">
+
+        <canvas id="canvas"></canvas>
+        <!-- <canvas id="canvas" width="2000" height="1080"></canvas> -->
+        <div class="GUI">
+            <form>
+                <div class="form-group">
+                    <div class="row">
+                            <div class="col">
+                                <input type="number" min="0" step="1" id="X"/>
+                                <input type="number" min="0" step="1" id="Y"/>
+                                <button class="btn btn-outline-primary" id="resize">Resize</button>
+                            </div>
+                            <div class="col">
+                                    <button class="btn btn-outline-primary" id="restart">Restart</button>
+                                    <button class="btn btn-outline-primary" id="init">Init</button>
+                                    <button class="btn btn-outline-primary" id="start">Start</button>
+                                    <button class="btn btn-outline-primary" id="pause">Pause</button>
+                            </div>
+                            <div class="col">
+                                <label for="speed">Delay in steps</label>
+                                <input type="range" class="custom-range" min="0" max="2000" step="20" id="speed">
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                            <div class="col">
+                                    <label for="w0">w0</label>
+                                    <input type="range" class="custom-range" min="0" max="1" step="0.1" id="w0">
+                            </div>
+                            <div class="col">
+                                    <label for="c">Parametr c</label>
+                                    <input type="range" class="custom-range" min="0" max="1" step="0.01" id="c">
+                            </div>
+                            <div class="col">
+                                <label for="dc">Delta C</label>
+                                <input type="range" class="custom-range" min="0" max="0.5" step="0.01" id="dc">
+                        </div>
+                            <div class="col">
+                                <label for="r">Parametr R</label>
+                                <input type="range" class="custom-range" min="1" max="3" step="0.25" id="r">
+                            </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
 <script type="text/javascript" src="bundle.js"></script></body>
 </html>

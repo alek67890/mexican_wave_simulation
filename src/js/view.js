@@ -3,20 +3,14 @@ import {States, Platfrom} from "./elements"
 
 class View {
     constructor(resolution, numOfPeople) {
-        console.log("constructor")
-        this.getCanvas()
         this.resolution = resolution || [2000, 750];
         this.numOfPeople = numOfPeople || [25, 15];
-
+        this.getCanvas()
         this.calculateSize();
 
-        // this.size = size || [48, 48];
-        // this.block_size = [Math.floor(this.resolution[0]/this.size[0]), Math.floor(this.resolution[1]/this.size[1])]
-        
         this.platform = new Platfrom(...numOfPeople, ...this.size);
         this.States = new States();
-        console.log(this.ctx)
-    }
+   }
 
     calculateSize(){
         let size1 = Math.floor(this.resolution[0] / this.numOfPeople[0]);
@@ -26,8 +20,12 @@ class View {
         }else {
             this.size = [size1, size1]
         }
+    }
 
-        
+    changeResolution(newResolution){
+        this.resolution = newResolution;
+        this.calculateSize();
+        this.platform.resize(...this.size)
     }
 
     async getCanvas(){
@@ -36,54 +34,54 @@ class View {
           var ctx = canvas.getContext('2d');
           ctx.fillStyle = 'orange';
           this.ctx = ctx;
+          canvas.width = this.resolution[0];
+          canvas.height = this.resolution[1];
         }
     }
 
     async clear() {
-  
         this.ctx.fillStyle = 'orange';
         this.ctx.fillRect(0,0,...this.resolution);
-
     }
     
-
     async refreshPlatform(){
-        
+        this.platform.replaceOldMatrix();
         for (var i = 0; i < this.platform.numOfX; i++) {        
             for (var j=0; j < this.platform.numOfY; j++){
-                this.drawImage(i,j,this.platform.getState(i, j))
+                this.drawImage(i,j,Math.floor(this.platform.getState(i, j)))
             }
         }
     }
-
-
-    // async drawPlatform(){
-    //     console.log(this.platform)
-    //     for (var i = 0; i < this.platform.numOfX; i++) {        
-    //         for (var j = 0; j < this.platform.numOfY; j++){
-    //             if (Math.round(Math.random())==0){
-    //                 this.platform.setState(i, j, 0);    
-    //             }else{
-    //                 this.platform.setState(i, j, 1);
-    //             }
-                
-    //         }
-    //     }
-    //     this.refreshPlatform()
-    //     console.log("step")
-    // }
-
 
     async drawImage(x,y,state){
         let image = this.States.images[state];
         this.ctx.drawImage(image, ...this.platform.getPosition(x, y), this.size[0], this.size[1]);
     }
 
-    // async drawPoint(x, y) {
-
-    //     this.ctx.fillStyle = 'black';
-    //     this.ctx.fillRect(this.size[0]*x, this.size[1]*y,this.size[0],this.size[1]);
-    // }
+    async drawPoint(x, y, state) {
+        // draw color point insted image. Not used.
+        switch(state) {
+            case 0:
+                this.ctx.fillStyle = 'black';
+                break;
+            case 1:
+                this.ctx.fillStyle = "red";
+                break;
+            case 2:
+                this.ctx.fillStyle = "yellow";
+                break;
+            case 3:
+                this.ctx.fillStyle = "white";
+                break;
+            case 4:
+                this.ctx.fillStyle = "yellow";
+                break;
+            case 5:
+                this.ctx.fillStyle = "red";
+                break;
+        }
+        this.ctx.fillRect(...this.platform.getPosition(x, y), this.size[0], this.size[1]);
+    }
 
 }
 
