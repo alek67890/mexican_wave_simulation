@@ -5,8 +5,8 @@ let uri = {
     1 : './img/state1_LARGE.jpg',
     2 : './img/state2_LARGE.jpg',
     3 : './img/state3_LARGE.jpg',
-    4 : './img/state4_LARGE.jpg',
-    5 : './img/state5_LARGE.jpg',
+    4 : './img/state2_LARGE.jpg',
+    5 : './img/state1_LARGE.jpg',
 }
 
 class States {
@@ -42,7 +42,6 @@ class Person {
         return(this.state);
     }
 
-
     setC(c){
         this.c = c;
     }
@@ -50,7 +49,6 @@ class Person {
     getC(){
         return(this.c);
     }
-
 
     setPosition(x,y){
         this.x = x;
@@ -66,7 +64,6 @@ class Platfrom{
 
         this.sizeX = sizeX || 45;
         this.sizeY = sizeY || sizeX || 45;
-
 
         this.createMatrix();
     }
@@ -124,25 +121,20 @@ class Platfrom{
         return(this.currentMatrix[x][y].getC(c));
     }
 
-
     handleOverflowVariable(x,y){
+        
         x = (x >= this.numOfX) ? x -(Math.floor(x/this.numOfX) * this.numOfX) : x;
-        // y = (y >= this.numOfY) ? y -(Math.floor(y/this.numOfY) * this.numOfY) : y; 
         y = (y >= this.numOfY) ? this.numOfY-1 : y; 
 
         x = (x < 0) ? x - (Math.floor(x/this.numOfX) * this.numOfX) : x;
-        // y = (y < 0) ? y - (Math.floor(y/this.numOfY) * this.numOfY) : y;
         y = (y < 0) ? 0 : y;
 
         return [x , y]
     }
 
-
-    replaceOldMatrix(){
-        
+    replaceOldMatrix(){        
         this.currentMatrix = cloneDeep(this.nextMatrix)
     }
-
 }
 
 export {States, Platfrom};

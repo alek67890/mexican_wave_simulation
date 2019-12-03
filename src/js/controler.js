@@ -1,36 +1,20 @@
 import {View} from "./view"
 import {Model} from "./model"
-import { delay } from 'q';
-
-
-const MaxTime = 2000;
-const MinTime = 0;
-var TIME = 200;
-
-let resolution = [1900, 750];
-let numOfPeople = [80,18];
 
 
 class Parms{
     constructor() {
-        
-        this.MaxTime = 2000;
-        this.MinTime = 0;
-        this.TIME = 200;
+    
+        this.delay = 200;
         this.resolution = [1900, 750];
         this.numOfPeople = [80,18];
-        this.c = 1;
+        this.c = 0.25;
         this.w0 = 0.5;
-        this.R = 1;
+        this.R = 2;
         this.dc = 0.1;
-
     }
 
-    updateTime(neValue){
-        this.TIME = this.MaxTime - neValue;
-    }
 }
-
 
 class Controler {
     constructor() {
@@ -39,7 +23,6 @@ class Controler {
         // this.loop();
     }
     
-
     setup(){
         this.createViewAndModel();
         // this.gui = new Gui;
@@ -50,7 +33,7 @@ class Controler {
     }
 
     createViewAndModel(){
-        this.view = new View(resolution, numOfPeople);
+        this.view = new View(this.parms.resolution, this.parms.numOfPeople);
         this.model = new Model(this.view.platform, this.parms);
     }
 
@@ -81,7 +64,6 @@ class Controler {
         window.clearInterval(this.idInterwal)
     }
 
-
     initButtons(){
         document.getElementById('resize').addEventListener("click", this.onButtonClick.bind(this));
         document.getElementById('start').addEventListener("click", this.onStartClick.bind(this));
@@ -91,33 +73,41 @@ class Controler {
         
     }
 
-
     initInput(){
 
-        resolution[0] = parseInt(document.querySelector(".container-fluid").clientWidth)
-        this.view.changeResolution(resolution);
+        this.parms.resolution[0] = parseInt(document.querySelector(".container-fluid").clientWidth)
+        this.view.changeResolution(this.parms.resolution);
 
-        this.speed = document.getElementById('speed');
-        this.speed.addEventListener("change", this.onChange.bind(this));
+        this.delayElement = document.getElementById('speed');
+        this.delayElement.addEventListener("change", this.onChange.bind(this));
         
-        this.c = document.getElementById('c');
-        this.c.addEventListener("change", this.onChange.bind(this));
+        this.cElement = document.getElementById('c');
+        this.cElement.addEventListener("change", this.onChange.bind(this));
 
-        this.dc = document.getElementById('dc');
-        this.dc.addEventListener("change", this.onChange.bind(this));
+        this.dcElement = document.getElementById('dc');
+        this.dcElement.addEventListener("change", this.onChange.bind(this));
 
-        this.w0 = document.getElementById('w0');
-        this.w0.addEventListener("change", this.onChange.bind(this));
+        this.w0Element = document.getElementById('w0');
+        this.w0Element.addEventListener("change", this.onChange.bind(this));
 
-        this.R = document.getElementById('r');
-        this.R.addEventListener("change", this.onChange.bind(this));
+        this.R_Element = document.getElementById('r');
+        this.R_Element.addEventListener("change", this.onChange.bind(this));
 
+        this.X_Element = document.getElementById('X');
+        this.Y_Element = document.getElementById('Y');
 
-        this.X = document.getElementById('X');
-        this.Y = document.getElementById('Y');
+        this.defaultValue();
+    }
 
-        this.speed.value = 2000 - 200;
-        [this.X.value, this.Y.value] = numOfPeople;
+    defaultValue(){
+        this.delayElement.value = this.parms.delay;
+        [this.X_Element.value, this.Y_Element.value] = this.parms.numOfPeople;
+
+        this.cElement.value  = this.parms.c; 
+        this.dcElement.value = this.parms.dc;
+        this.w0Element.value = this.parms.w0;
+        this.R_Element.value = this.parms.R;
+        
         this.onChange();
     }
 
@@ -126,69 +116,28 @@ class Controler {
         this.initInput();     
     }
 
-
-
-
-    // async initEventHandlers(){
-    //     this.pressedButton = new Set([]);
-    //     window.addEventListener( "keydown", this.onKeyDown.bind(this), false );
-    //     window.addEventListener( "keyup", this.onKeyUp.bind(this), false );
-    //     window.addEventListener( "keypress", this.onKeyPressTime.bind(this), false );
-
-    //     document.getElementById('resize').addEventListener("click", this.onButtonClick.bind(this));
-    //     document.getElementById('start').addEventListener("click", this.onStartClick.bind(this));
-    //     document.getElementById('restart').addEventListener("click", this.onRestartClick.bind(this));
-
-        
-
-    //     resolution[0] = parseInt(document.querySelector(".container-fluid").clientWidth)
-    //     this.view.changeResolution(resolution);
-
-        
-    //     this.speed = document.getElementById('speed');
-    //     this.speed.addEventListener("change", this.onChange.bind(this));
-        
-    //     this.c = document.getElementById('c');
-    //     this.c.addEventListener("change", this.onChange.bind(this));
-
-    //     this.w0 = document.getElementById('w0');
-    //     this.c.addEventListener("change", this.onChange.bind(this));
-
-
-    //     this.X = document.getElementById('X');
-    //     this.Y = document.getElementById('Y');
-
-    //     this.speed.value = 2000 - 200;
-    //     [this.X.value, this.Y.value] = numOfPeople;
-    //     this.onChange();
-
-    // }
-
     async onButtonClick(e){
         e.preventDefault();
-        numOfPeople = [parseInt(this.X.value), parseInt(this.Y.value)];
+        this.parms.numOfPeople = [parseInt(this.X_Element.value), parseInt(this.Y_Element.value)];
         this.setup();
     }
 
     onChange(){
-        this.parms.updateTime(this.speed.value)
-        console.log(this.speed.value)
-        this.speed.value = 2000 - this.parms.TIME;
 
-        this.speed.labels[0].innerText = `Speed  = ${this.speed.value}`
+        this.parms.delay = this.delayElement.value 
+        this.delayElement.labels[0].innerText = `Time delay between steps  = ${this.delayElement.value}`
 
-        this.parms.c = parseFloat(this.c.value);
-        this.c.labels[0].innerText = `Parametr c = ${this.parms.c}`
+        this.parms.c = parseFloat(this.cElement.value);
+        this.cElement.labels[0].innerText = `Parametr c = ${this.parms.c}`
 
-        this.parms.dc = parseFloat(this.dc.value);
-        this.dc.labels[0].innerText = `Parametr dc = ${this.parms.dc}`
+        this.parms.dc = parseFloat(this.dcElement.value);
+        this.dcElement.labels[0].innerText = `Parametr dc = ${this.parms.dc}`
 
+        this.parms.w0  = parseFloat(this.w0Element.value)
+        this.w0Element.labels[0].innerText = `Parametr w0 = ${this.parms.w0}`
 
-        this.parms.w0  = parseFloat(this.w0.value)
-        this.w0.labels[0].innerText = `Parametr w0 = ${this.parms.w0}`
-
-        this.parms.R  = parseFloat(this.R.value)
-        this.R.labels[0].innerText = `Parametr R = ${this.parms.R}`
+        this.parms.R  = parseFloat(this.R_Element.value)
+        this.R_Element.labels[0].innerText = `Parametr R = ${this.parms.R}`
 
     }
 
@@ -198,12 +147,12 @@ class Controler {
     }
 
     async loop(){
-    
-        this.idInterwal = window.setInterval(() => this.runInLoop() , this.parms.TIME);
-        // while (true){ 
-        //     this.runInLoop();
-        //     await delay(this.parms.TIME);
-        // }
+        try {
+            window.clearInterval(this.idInterwal)
+        }
+        finally {
+            this.idInterwal = window.setInterval(() => this.runInLoop() , this.parms.delay);
+        }
     }
 
 }

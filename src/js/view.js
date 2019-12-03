@@ -3,21 +3,14 @@ import {States, Platfrom} from "./elements"
 
 class View {
     constructor(resolution, numOfPeople) {
-        console.log("constructor")
         this.resolution = resolution || [2000, 750];
         this.numOfPeople = numOfPeople || [25, 15];
-        console.log(this.numOfPeople)
         this.getCanvas()
-
         this.calculateSize();
 
-        // this.size = size || [48, 48];
-        // this.block_size = [Math.floor(this.resolution[0]/this.size[0]), Math.floor(this.resolution[1]/this.size[1])]
-        
         this.platform = new Platfrom(...numOfPeople, ...this.size);
         this.States = new States();
-        console.log(this.ctx)
-    }
+   }
 
     calculateSize(){
         let size1 = Math.floor(this.resolution[0] / this.numOfPeople[0]);
@@ -27,8 +20,6 @@ class View {
         }else {
             this.size = [size1, size1]
         }
-        console.log(this.size)
-
     }
 
     changeResolution(newResolution){
@@ -49,10 +40,8 @@ class View {
     }
 
     async clear() {
-  
         this.ctx.fillStyle = 'orange';
         this.ctx.fillRect(0,0,...this.resolution);
-
     }
     
     async refreshPlatform(){
@@ -70,7 +59,7 @@ class View {
     }
 
     async drawPoint(x, y, state) {
-
+        // draw color point insted image. Not used.
         switch(state) {
             case 0:
                 this.ctx.fillStyle = 'black';
