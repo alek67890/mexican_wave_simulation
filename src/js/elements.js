@@ -1,12 +1,18 @@
 import { cloneDeep } from 'lodash';
 
+import image0 from '../img/state0_LARGE.jpg'; 
+import image1 from '../img/state1_LARGE.jpg'; 
+import image2 from '../img/state2_LARGE.jpg'; 
+import image3 from '../img/state3_LARGE.jpg'; 
+ 
+
 let uri = {
-    0 : './img/state0_LARGE.jpg',
-    1 : './img/state1_LARGE.jpg',
-    2 : './img/state2_LARGE.jpg',
-    3 : './img/state3_LARGE.jpg',
-    4 : './img/state2_LARGE.jpg',
-    5 : './img/state1_LARGE.jpg',
+    0 : image0,
+    1 : image1,
+    2 : image2,
+    3 : image3,
+    4 : image2,
+    5 : image1,
 }
 
 class States {
